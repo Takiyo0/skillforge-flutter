@@ -6,18 +6,16 @@ class AppStatCard extends StatelessWidget {
     super.key,
     required this.label,
     required this.value,
-    this.width,
     this.radius = 16,
   });
 
   final String label;
   final String value;
-  final double? width;
   final double radius;
 
   @override
   Widget build(BuildContext context) {
-    final child = GlassPanel(
+    return GlassPanel(
       radius: radius,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +31,5 @@ class AppStatCard extends StatelessWidget {
         ],
       ),
     );
-    if (width == null) return child;
-    return SizedBox(width: width, child: child);
   }
 }

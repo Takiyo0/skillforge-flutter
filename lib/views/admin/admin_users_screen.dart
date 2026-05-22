@@ -408,38 +408,24 @@ class _StatsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final adminCount = stats.byRole['admin'] ?? 0;
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisSpacing: 12,
+      mainAxisSpacing: 12,
+      childAspectRatio: 1.9,
       children: [
-        AppStatCard(
-          label: 'Total Users',
-          value: '${stats.totalUsers}',
-          width: _statWidth(context),
-        ),
-        AppStatCard(
-          label: 'Active Users',
-          value: '${stats.activeUsers}',
-          width: _statWidth(context),
-        ),
-        AppStatCard(
-          label: 'Inactive Users',
-          value: '${stats.inactiveUsers}',
-          width: _statWidth(context),
-        ),
-        AppStatCard(
-          label: 'Admins',
-          value: '$adminCount',
-          width: _statWidth(context),
-        ),
+        AppStatCard(label: 'Total Users', value: '${stats.totalUsers}'),
+        AppStatCard(label: 'Active Users', value: '${stats.activeUsers}'),
+        AppStatCard(label: 'Inactive Users', value: '${stats.inactiveUsers}'),
+        AppStatCard(label: 'Admins', value: '$adminCount'),
       ],
     );
   }
 
   double _statWidth(BuildContext context) {
-    return MediaQuery.sizeOf(context).width > 560
-        ? (MediaQuery.sizeOf(context).width - 52) / 2
-        : double.infinity;
+    return (MediaQuery.sizeOf(context).width - 52) / 2;
   }
 }
 
