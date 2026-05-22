@@ -1,0 +1,45 @@
+name: skillforgeapp
+description: "A mobile app of skillforge"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.8
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_riverpod: ^2.6.1
+  go_router: ^14.8.1
+  http: ^1.3.0
+  http_parser: ^4.0.2
+  shared_preferences: ^2.5.3
+  video_player: ^2.9.2
+  flutter_svg: ^2.0.17
+  flutter_markdown: ^0.7.4+3
+  url_launcher: ^6.3.1
+  share_plus: ^10.1.2
+  qr_flutter: ^4.1.0
+  file_picker: ^8.1.2
+  flutter_launcher_icons: ^0.14.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/icon@1240.png"
+  # For Android 8.0+ adaptive icons
+  adaptive_icon_background: "#4263EB"
+  adaptive_icon_foreground: "assets/icons/icon@1240.png"
