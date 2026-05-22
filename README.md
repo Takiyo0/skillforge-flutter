@@ -45,17 +45,18 @@ lib/
   widgets/             # reusable UI pieces (domain-grouped)
 ```
 
-## Environment / API Base URL
+## Environments
 
-App base URL is configured in `lib/config/app_config.dart`:
-
-- default: `https://skillforge.takiyo.us`
-- API base: `${BASE_URL}/api/v1`
+- Base API URL (BASE_URL)
+  - Base URL: `https://skillforge.takiyo.us`
+  - Base API: `${BASE_URL}/api/v1`
+- Base CDN URL (BASE_CDN_URL)
+  - Base CDN: `https://cdn-sf-apac.takiyo.us`
 
 Override at runtime with `--dart-define`:
 
 ```bash
-flutter run --dart-define=BASE_URL=https://your-api-host.com
+flutter run --dart-define=BASE_URL=https://your-api-host.com --dart-define=BASE_CDN_URL=https://your-cdn-host.com
 ```
 
 ## Getting Started
@@ -104,3 +105,14 @@ flutter run -d <device_id>
 - Users
 
 Access is guarded by role checks (`admin` / `instructor`).
+
+## Screenshots
+
+![Frame 2.png](docs/assets/Frame%202.png)
+![Frame 3.png](docs/assets/Frame%203.png)
+![Frame 4.png](docs/assets/Frame%204.png)
+![Frame 5.png](docs/assets/Frame%205.png)
+![Frame 6.png](docs/assets/Frame%206.png)
+![Frame 7.png](docs/assets/Frame%207.png)
+![Frame 8.png](docs/assets/Frame%208.png)
+![Frame 9.png](docs/assets/Frame%209.png)
