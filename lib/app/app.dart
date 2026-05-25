@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../utils/permissions.dart';
 import '../providers/app_state.dart';
-import '../views/admin/admin_shell_screen.dart';
+import '../ui/design_system.dart';
+import '../utils/permissions.dart';
 import '../views/admin/admin_badges_screen.dart';
 import '../views/admin/admin_course_detail_screen.dart';
 import '../views/admin/admin_courses_screen.dart';
 import '../views/admin/admin_home_screen.dart';
 import '../views/admin/admin_learning_paths_screen.dart';
+import '../views/admin/admin_shell_screen.dart';
 import '../views/admin/admin_unit_placeholder_screen.dart';
 import '../views/admin/admin_users_screen.dart';
-import '../ui/design_system.dart';
 import '../views/auth/login_screen.dart';
 import '../views/auth/register_screen.dart';
 import '../views/shared/certificate_screen.dart';
@@ -25,6 +25,7 @@ import '../views/student/code_playground_screen.dart';
 import '../views/student/course_detail_screen.dart';
 import '../views/student/course_forums_screen.dart';
 import '../views/student/forum_thread_screen.dart';
+import '../views/student/leaderboard_screen.dart';
 import '../views/student/learning_path_screen.dart';
 import '../views/student/learning_paths_screen.dart';
 import '../views/student/more_screen.dart';
@@ -162,7 +163,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: '/student/leaderboard',
-            pageBuilder: (_, state) => _page(state, const CertificatesPage()),
+            pageBuilder: (_, state) => _page(state, const LeaderboardPage()),
           ),
           GoRoute(
             path: '/student/code-sandbox',

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:skillforgeapp/ui/shell_header_state.dart';
 
 import '../../ui/design_system.dart';
 
@@ -50,6 +49,7 @@ final shellComputedViewModelProvider =
           (path.startsWith('/student/learning-paths') ||
               path.startsWith('/student/learning-path') ||
               path.startsWith('/student/certificates') ||
+              path.startsWith('/student/leaderboard') ||
               path.startsWith('/student/code-sandbox') ||
               path.startsWith('/student/playground') ||
               path.startsWith('/student/settings'))) {

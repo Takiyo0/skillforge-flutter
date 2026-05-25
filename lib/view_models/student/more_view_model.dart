@@ -36,6 +36,12 @@ final moreMenuItemsViewModelProvider = Provider<List<MoreMenuItem>>((ref) {
       route: '/student/certificates',
     ),
     const MoreMenuItem(
+      icon: Icons.leaderboard_outlined,
+      title: 'Leaderboard',
+      subtitle: 'Weekly ranks and all-time legends',
+      route: '/student/leaderboard',
+    ),
+    const MoreMenuItem(
       icon: Icons.science_outlined,
       title: 'Sandbox',
       subtitle: 'Code playground and experiments',

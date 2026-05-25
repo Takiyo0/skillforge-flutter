@@ -1,10 +1,11 @@
 import 'dart:typed_data';
 
-import 'package:skillforgeapp/network/api_client.dart';
 import 'package:skillforgeapp/models/admin/admin_models.dart';
-import 'package:skillforgeapp/models/shared/api_error.dart';
 import 'package:skillforgeapp/models/auth/auth_models.dart';
+import 'package:skillforgeapp/models/shared/api_error.dart';
 import 'package:skillforgeapp/models/shared/paginated_response.dart';
+import 'package:skillforgeapp/models/student/leaderboard_models.dart';
+import 'package:skillforgeapp/network/api_client.dart';
 
 class SkillForgeRepository {
   SkillForgeRepository(this._client);
@@ -98,6 +99,24 @@ class SkillForgeRepository {
       return (data['leaderboard'] as List?) ?? const [];
     }
     return const [];
+  }
+
+  Future<LeaderboardResponse> getGlobalLeaderboard({
+    required LeaderboardPeriod period,
+    int limit = 100,
+    String? lastId,
+  }) async {
+    final raw = await _client.request(
+      'GET',
+      '/leaderboards/global',
+      query: {
+        'period': period.apiValue,
+        'limit': limit,
+        if (lastId != null && lastId.isNotEmpty) 'lastId': lastId,
+      },
+    );
+    final data = _expectMap(raw, '/leaderboards/global');
+    return LeaderboardResponse.fromJson(data);
   }
 
   Future<PaginatedResponse<Map<String, dynamic>>> listCourses({
