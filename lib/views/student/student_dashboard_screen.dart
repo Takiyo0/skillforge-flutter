@@ -44,7 +44,8 @@ class StudentDashboardPage extends ConsumerWidget {
 
           final displayName = user?.displayName?.toString() ?? '';
           final xpInto = xp['xpIntoCurrentLevel'] ?? 0;
-          final xpNeeded = xp['xpNeededForNextLevel'] ?? 0;
+          final currentMaxXp =
+              (xp['xpForNextLevel'] ?? 0) - (xp['xpForCurrentLevel'] ?? 0);
           final levelProgress = (_percent(xp['progressPercent']) / 100).clamp(
             0.0,
             1.0,
@@ -123,7 +124,7 @@ class StudentDashboardPage extends ConsumerWidget {
                               ),
                               const Spacer(),
                               Text(
-                                '$xpInto / $xpNeeded XP',
+                                '$xpInto / $currentMaxXp XP',
                                 style: const TextStyle(
                                   color: Color(0xFFE0F2FE),
                                   fontWeight: FontWeight.w800,
