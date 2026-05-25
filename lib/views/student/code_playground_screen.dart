@@ -33,6 +33,10 @@ class _CodePlaygroundPageState extends ConsumerState<CodePlaygroundPage> {
   bool _running = false;
   String? _error;
 
+  void _handleTapOutside(PointerDownEvent _) {
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
   @override
   void dispose() {
     _code.dispose();
@@ -199,6 +203,7 @@ class _CodePlaygroundPageState extends ConsumerState<CodePlaygroundPage> {
                         controller: _code,
                         minLines: 14,
                         maxLines: 22,
+                        onTapOutside: _handleTapOutside,
                         decoration: const InputDecoration(labelText: 'Code'),
                       ),
                     ],
@@ -256,6 +261,7 @@ class _CodePlaygroundPageState extends ConsumerState<CodePlaygroundPage> {
                                     controller: tc.input,
                                     minLines: 2,
                                     maxLines: 4,
+                                    onTapOutside: _handleTapOutside,
                                     decoration: const InputDecoration(
                                       labelText: 'Input',
                                     ),
@@ -265,6 +271,7 @@ class _CodePlaygroundPageState extends ConsumerState<CodePlaygroundPage> {
                                     controller: tc.output,
                                     minLines: 2,
                                     maxLines: 4,
+                                    onTapOutside: _handleTapOutside,
                                     decoration: const InputDecoration(
                                       labelText: 'Expected output (optional)',
                                     ),

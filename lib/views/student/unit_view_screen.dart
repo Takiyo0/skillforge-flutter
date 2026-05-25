@@ -105,6 +105,7 @@ class _UnitViewPageState extends ConsumerState<UnitViewPage> {
           final exercise = (unit['exercise'] is Map<String, dynamic>)
               ? unit['exercise'] as Map<String, dynamic>
               : const <String, dynamic>{};
+          final testCases = _toMapList(exercise['testCases']);
           final quiz = (unit['quiz'] is Map<String, dynamic>)
               ? unit['quiz'] as Map<String, dynamic>
               : const <String, dynamic>{};
@@ -225,6 +226,10 @@ class _UnitViewPageState extends ConsumerState<UnitViewPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
+                if (testCases.isNotEmpty) ...[
+                  _ExerciseTestCasesCard(testCases: testCases),
+                  const SizedBox(height: 10),
+                ],
                 TextField(
                   controller: _code,
                   minLines: 8,
@@ -528,6 +533,172 @@ class _UnitViewPageState extends ConsumerState<UnitViewPage> {
           );
         },
       ),
+    );
+  }
+}
+
+class _ExerciseTestCasesCard extends StatelessWidget {
+  const _ExerciseTestCasesCard({required this.testCases});
+
+  final List<Map<String, dynamic>> testCases;
+
+  @override
+  Widget build(BuildContext context) {
+    final visibleCount = testCases
+        .where((testCase) => testCase['isHidden'] != true)
+        .length;
+    final hiddenCount = testCases.length - visibleCount;
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Test Cases',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .titleMedium,
+                  ),
+                ),
+                Chip(
+                  label: Text(
+                    hiddenCount > 0
+                        ? '$visibleCount visible • $hiddenCount hidden'
+                        : '$visibleCount visible',
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            ...testCases.indexed.map((entry) {
+              return Padding(
+                padding: EdgeInsets.only(
+                  bottom: entry.$1 == testCases.length - 1 ? 0 : 8,
+                ),
+                child: _ExerciseTestCaseTile(
+                  index: entry.$1 + 1,
+                  testCase: entry.$2,
+                ),
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ExerciseTestCaseTile extends StatelessWidget {
+  const _ExerciseTestCaseTile({required this.index, required this.testCase});
+
+  final int index;
+  final Map<String, dynamic> testCase;
+
+  @override
+  Widget build(BuildContext context) {
+    final hidden = testCase['isHidden'] == true;
+    final input = (testCase['inputText'] ?? '').toString();
+    final expected = (testCase['expectedOutput'] ?? '').toString();
+    final weight = (testCase['weight'] as num?)?.toInt();
+    final theme = Theme.of(context);
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainerHighest.withValues(
+            alpha: 0.35),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.55),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                hidden ? Icons.lock_outline : Icons.fact_check_outlined,
+                size: 18,
+                color: hidden ? theme.colorScheme.outline : Colors.green,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Case $index',
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+              if (weight != null) Chip(label: Text('Weight $weight')),
+            ],
+          ),
+          const SizedBox(height: 8),
+          if (hidden)
+            Text(
+              'Hidden test case. Input and expected output are not shown.',
+              style: theme.textTheme.bodyMedium,
+            )
+          else
+            ...[
+              _TestCaseField(label: 'Input', value: input),
+              const SizedBox(height: 8),
+              _TestCaseField(label: 'Expected Output', value: expected),
+            ],
+        ],
+      ),
+    );
+  }
+}
+
+class _TestCaseField extends StatelessWidget {
+  const _TestCaseField({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final text = value
+        .trim()
+        .isEmpty ? '(empty)' : value;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label.toUpperCase(),
+          style: theme.textTheme.bodySmall?.copyWith(
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: theme.brightness == Brightness.dark
+                ? const Color(0xFF020617)
+                : const Color(0xFFF8FAFC),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: theme.colorScheme.outlineVariant.withValues(alpha: 0.55),
+            ),
+          ),
+          child: SelectableText(
+            text,
+            style: const TextStyle(fontFamily: 'monospace', height: 1.45),
+          ),
+        ),
+      ],
     );
   }
 }
